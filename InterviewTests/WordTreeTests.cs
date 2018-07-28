@@ -9,13 +9,21 @@ namespace InteviewTests
     [TestClass]
     public class WordTreeTests
     {
+        private WordTree _tree;
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            _tree = new WordTree();
+            _tree.StoreWord("Apple");
+            _tree.StoreWord("Apples");
+            _tree.StoreWord("application");
+        }
+
         [TestMethod]
         public void WordTree_Store()
         {
-            var tree = new WordTree();
-            tree.StoreWord("Apple");
-            tree.StoreWord("application");
-            var next = tree.NextLetters("a");
+            var next = _tree.NextLetters("a");
             Assert.AreEqual(next.Count, 1);
             Assert.AreEqual(next[0], 'P');
         }
@@ -23,10 +31,7 @@ namespace InteviewTests
         [TestMethod]
         public void WordTree_Next_Appl()
         {
-            var tree = new WordTree();
-            tree.StoreWord("Apple");
-            tree.StoreWord("application");
-            var next = tree.NextLetters("appl");
+            var next = _tree.NextLetters("appl");
             Assert.AreEqual(next.Count, 2);
             Assert.AreEqual(next[0], 'E');
             Assert.AreEqual(next[1], 'I');
@@ -35,10 +40,7 @@ namespace InteviewTests
         [TestMethod]
         public void WordTree_Next_Empty()
         {
-            var tree = new WordTree();
-            tree.StoreWord("Apple");
-            tree.StoreWord("application");
-            var next = tree.NextLetters("");
+            var next = _tree.NextLetters("");
             Assert.AreEqual(next.Count, 1);
             Assert.AreEqual(next[0], 'A');
         }
@@ -46,12 +48,8 @@ namespace InteviewTests
         [TestMethod]
         public void WordTree_CheckWord_Valid()
         {
-            var tree = new WordTree();
-            tree.StoreWord("Apple");
-            tree.StoreWord("Apples");
-            tree.StoreWord("application");
-            bool result = tree.IsValidWord("apple");
-            bool result2 = tree.IsValidWord("apples");
+            bool result = _tree.IsValidWord("apple");
+            bool result2 = _tree.IsValidWord("apples");
             Assert.AreEqual(result, true);
             Assert.AreEqual(result2, true);
         }
@@ -59,12 +57,8 @@ namespace InteviewTests
         [TestMethod]
         public void WordTree_CheckWord_Invalid()
         {
-            var tree = new WordTree();
-            tree.StoreWord("Apple");
-            tree.StoreWord("Apples");
-            tree.StoreWord("application");
-            bool result = tree.IsValidWord("applesss");
-            bool result2 = tree.IsValidWord("pple");
+            bool result = _tree.IsValidWord("applesss");
+            bool result2 = _tree.IsValidWord("pple");
             Assert.AreEqual(result, false);
             Assert.AreEqual(result2, false);
         }
